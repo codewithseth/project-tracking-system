@@ -2,21 +2,21 @@ import pool from "../config/db.js";
 import bcrypt from "bcryptjs";
 
 class User {
+  // Fetch all users (excluding password hashes)
   static async findAll() {
     try {
-      const [users] = await pool.query(
-        "SELECT id, username, pwd_hash FROM users",
-      );
+      const [users] = await pool.query("SELECT id, username FROM users");
       return users;
     } catch (error) {
       throw new Error(`Error fetching users: ${error.message}`);
     }
   }
 
+  // Fetch a user by ID (excluding password hash)
   static async findById(id) {
     try {
       const [users] = await pool.query(
-        "SELECT id, username, pwd_hash FROM users WHERE id = ?",
+        "SELECT id, username FROM users WHERE id = ?",
         [id],
       );
       return users[0];
@@ -25,6 +25,7 @@ class User {
     }
   }
 
+  // Create a new user with hashed password
   static async create(username, password) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -41,21 +42,20 @@ class User {
     }
   }
 
+  // Update a user's username
   static async updateUsername(id, newUsername) {
     try {
       const [result] = await pool.query(
         "UPDATE users SET username = ? WHERE id = ?",
         [newUsername, id],
       );
-      if (result.affectedRows === 0) {
-        throw new Error("User not found");
-      }
-      return { id, username: newUsername };
+      return result.affectedRows;
     } catch (error) {
       throw new Error(`Error updating username: ${error.message}`);
     }
   }
 
+  // Update a user's password
   static async updatePassword(id, newPassword) {
     try {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -63,22 +63,17 @@ class User {
         "UPDATE users SET pwd_hash = ? WHERE id = ?",
         [hashedPassword, id],
       );
-      if (result.affectedRows === 0) {
-        throw new Error("User not found");
-      }
-      return { message: "Password updated successfully" };
+      return result.affectedRows;
     } catch (error) {
       throw new Error(`Error updating password: ${error.message}`);
     }
   }
 
+  // Delete a user by ID
   static async delete(id) {
     try {
       const [result] = await pool.query("DELETE FROM users WHERE id = ?", [id]);
-      if (result.affectedRows === 0) {
-        throw new Error("User not found");
-      }
-      return { message: "User deleted successfully" };
+      return result.affectedRows;
     } catch (error) {
       throw new Error(`Error deleting user: ${error.message}`);
     }
