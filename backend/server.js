@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 
 // 404 Error Handling

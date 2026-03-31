@@ -25,6 +25,19 @@ class User {
     }
   }
 
+  // Fetch a user by username (including password hash for authentication)
+  static async findByUsername(username) {
+    try {
+      const [users] = await pool.query(
+        "SELECT id, username, pwd_hash FROM users WHERE username = ?",
+        [username],
+      );
+      return users[0];
+    } catch (error) {
+      throw new Error(`Error fetching user by username: ${error.message}`);
+    }
+  }
+
   // Create a new user with hashed password
   static async create(username, password) {
     try {
