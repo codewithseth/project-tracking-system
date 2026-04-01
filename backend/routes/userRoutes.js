@@ -1,10 +1,13 @@
 import express from "express";
 import User from "../models/User.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// GET /api/v1/users - Retrieve all users
-router.get("/", async (req, res, next) => {
+// @route           GET /api/v1/users
+// @description     Get all users
+// @access          Private
+router.get("/", protect, async (req, res, next) => {
   try {
     const users = await User.findAll();
     res.json(users);
@@ -13,8 +16,10 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET /api/v1/users/:id - Retrieve a user by ID
-router.get("/:id", async (req, res, next) => {
+// @route           GET /api/v1/users/:id
+// @description     Get a user by ID
+// @access          Private
+router.get("/:id", protect, async (req, res, next) => {
   const { id } = req.params;
   try {
     const user = await User.findById(id);
@@ -28,8 +33,10 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// POST /api/v1/users - Create a new user
-router.post("/", async (req, res, next) => {
+// @route           POST /api/v1/users
+// @description     Create a new user
+// @access          Private
+router.post("/", protect, async (req, res, next) => {
   const { username, password } = req.body || {}; // Add default empty object to prevent destructuring error
 
   if (!username || !password) {
@@ -45,8 +52,10 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// PUT /api/v1/users/:id/username - Update a user's username
-router.put("/:id/username", async (req, res, next) => {
+// @route           PUT /api/v1/users/:id/username
+// @description     Update a user's username
+// @access          Private
+router.put("/:id/username", protect, async (req, res, next) => {
   const { id } = req.params;
   const { newUsername } = req.body || {};
 
@@ -67,8 +76,10 @@ router.put("/:id/username", async (req, res, next) => {
   }
 });
 
-// PUT /api/v1/users/:id/password - Update a user's password
-router.put("/:id/password", async (req, res, next) => {
+// @route           PUT /api/v1/users/:id/password
+// @description     Update a user's password
+// @access          Private
+router.put("/:id/password", protect, async (req, res, next) => {
   const { id } = req.params;
   const { newPassword } = req.body || {};
 
@@ -89,15 +100,11 @@ router.put("/:id/password", async (req, res, next) => {
   }
 });
 
-// DELETE /api/v1/users/:id - Delete a user
-router.delete("/:id", async (req, res, next) => {
+// @route           DELETE /api/v1/users/:id
+// @description     Delete a user
+// @access          Private
+router.delete("/:id", protect, async (req, res, next) => {
   const { id } = req.params;
-
-  const user = await User.findById(id);
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
-  }
 
   try {
     const deletedUser = await User.delete(id);
