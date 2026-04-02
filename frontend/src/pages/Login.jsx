@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { setAccessToken, setUser } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +15,7 @@ const Login = () => {
     if (response.accessToken) {
       setAccessToken(response.accessToken);
       setUser(response.user);
+      navigate("/projects");
     }
   };
 

@@ -8,3 +8,20 @@ export const login = async (credentials) => {
     console.log(error);
   }
 };
+
+export const refreshToken = async () => {
+  try {
+    const response = await api.post("/auth/refresh");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logout = async () => {
+  try {
+    await api.post("/auth/logout");
+  } catch (error) {
+    console.log(error);
+  }
+};
