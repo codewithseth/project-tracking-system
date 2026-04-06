@@ -33,7 +33,7 @@ router.post("/login", async (req, res, next) => {
 
     // Generate JWT token
     const payload = { userId: user.id };
-    const accessToken = await generateToken(payload, "1m"); // Access token valid for 1 minute
+    const accessToken = await generateToken(payload, "30m"); // Access token valid for 1 minute
     const refreshToken = await generateToken(payload, "5d"); // Refresh token valid for 5 days
 
     // Set refresh token in HTTP-Only cookie
