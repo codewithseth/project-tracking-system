@@ -10,17 +10,14 @@ const api = axios.create({
   },
 });
 
-// Add access token to request headers
 api.interceptors.request.use((config) => {
   const token = getStoredAccessToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-
   return config;
 });
 
-// Refresh token after expire
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
@@ -29,7 +26,9 @@ api.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url.includes("/auth/refresh")
+      !originalRequest.url.includes("/auth/refresh") &&
+      !originalRequest.url.includes("/auth/login") &&
+      !originalRequest.url.includes("/auth/logout")
     ) {
       originalRequest._retry = true;
 

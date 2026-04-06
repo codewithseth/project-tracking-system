@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { logout } from "../api/auth";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const { user, setUser, setAccessToken } = useAuth();
@@ -11,7 +12,7 @@ const Header = () => {
       setUser(null);
       setAccessToken(null);
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   };
 

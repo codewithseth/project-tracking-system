@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,11 +12,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await login({ username, password });
-    if (response.accessToken) {
-      setAccessToken(response.accessToken);
-      setUser(response.user);
-      navigate("/projects");
+    try {
+      const response = await login({ username, password });
+      if (response?.accessToken) {
+        setAccessToken(response.accessToken);
+        setUser(response.user);
+        navigate("/projects");
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
