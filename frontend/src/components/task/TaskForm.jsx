@@ -34,7 +34,6 @@ const TaskForm = ({ projects, onTaskCreated }) => {
 
     setLoading(true);
     try {
-      console.log(formData.status);
       await createTask({
         project_id: parseInt(formData.project_id),
         title: formData.title,

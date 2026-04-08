@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { setStoredAccessToken } from "../lib/authToken";
 import { refreshToken } from "../api/auth";
-import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -18,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         setUser(user);
         setStoredAccessToken(newToken);
       } catch (error) {
-        toast.error(error.message);
+        console.log(error.message);
       }
     };
 
