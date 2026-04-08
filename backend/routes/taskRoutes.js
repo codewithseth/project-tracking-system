@@ -38,7 +38,7 @@ router.get("/:id", protect, async (req, res, next) => {
 // @description     Create a new task
 // @access          Private
 router.post("/", protect, async (req, res, next) => {
-  const { project_id, title, description } = req.body || {};
+  const { project_id, title, description, status } = req.body || {};
 
   if (!project_id || !title) {
     res.status(400);
@@ -52,7 +52,12 @@ router.post("/", protect, async (req, res, next) => {
   }
 
   try {
-    const newTask = await Task.create(project_id, title, description || "");
+    const newTask = await Task.create(
+      project_id,
+      title,
+      description || "",
+      status || "todo",
+    );
     res.json(newTask);
   } catch (error) {
     next(error);

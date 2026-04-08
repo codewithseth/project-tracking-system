@@ -21,7 +21,7 @@ const Header = () => {
       <div className="container">
         {/* Left: Brand */}
         <Link to={"/projects"} className="navbar-brand">
-          Welcome, {user ? user.username : "Guest"}
+          PROJECT TRACKER
         </Link>
 
         <button
@@ -38,7 +38,7 @@ const Header = () => {
             <>
               {/* Center: Menu */}
               <ul className="navbar-nav mx-auto">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <NavLink
                     to="/users"
                     className={({ isActive }) =>
@@ -47,7 +47,7 @@ const Header = () => {
                   >
                     User
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <NavLink
                     to="/projects"

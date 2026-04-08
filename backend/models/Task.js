@@ -27,18 +27,18 @@ class Task {
   }
 
   // Create a new task
-  static async create(project_id, title, description) {
+  static async create(project_id, title, description, status) {
     try {
       const [result] = await pool.query(
         "INSERT INTO tasks (project_id, title, description, status) VALUES (?, ?, ?, ?)",
-        [project_id, title, description, "todo"],
+        [project_id, title, description, status || "todo"],
       );
       return {
         id: result.insertId,
         project_id,
         title,
         description,
-        status: "todo",
+        status: status || "todo",
         created_at: new Date(),
       };
     } catch (error) {
