@@ -5,7 +5,7 @@ class Project {
   static async findAll() {
     try {
       const [projects] = await pool.query(
-        "SELECT id, title, description, created_at FROM projects",
+        "SELECT id, title, description, created_at FROM projects ORDER BY created_at DESC",
       );
       return projects;
     } catch (error) {
