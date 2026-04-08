@@ -6,13 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PublicRoute from "./components/layout/PublicRoute";
+import PrivateRoute from "./components/layout/PrivateRoute";
 import Login from "./pages/Login";
 import Project from "./pages/Project";
 import Task from "./pages/Task";
 import User from "./pages/User";
 import NotFound from "./pages/NotFound";
-import PublicRoute from "./components/layout/PublicRoute";
-import ProtectedRoute from "./components/layout/PrivateRoute";
 
 const App = () => {
   return (
@@ -29,7 +29,7 @@ const App = () => {
               </Route>
 
               {/* Protected Routes */}
-              <Route element={<ProtectedRoute />}>
+              <Route element={<PrivateRoute />}>
                 <Route path="/projects" element={<Project />} />
                 <Route path="/tasks" element={<Task />} />
                 <Route path="/users" element={<User />} />
