@@ -4,7 +4,9 @@ class Project {
   // Fetch all projects
   static async findAll() {
     try {
-      const [projects] = await pool.query("SELECT id, title, description, created_at FROM projects");
+      const [projects] = await pool.query(
+        "SELECT id, title, description, created_at FROM projects",
+      );
       return projects;
     } catch (error) {
       throw new Error(`Error fetching projects: ${error.message}`);
@@ -58,7 +60,9 @@ class Project {
   // Delete a project
   static async delete(id) {
     try {
-      const [result] = await pool.query("DELETE FROM projects WHERE id = ?", [id]);
+      const [result] = await pool.query("DELETE FROM projects WHERE id = ?", [
+        id,
+      ]);
       return result.affectedRows;
     } catch (error) {
       throw new Error(`Error deleting project: ${error.message}`);

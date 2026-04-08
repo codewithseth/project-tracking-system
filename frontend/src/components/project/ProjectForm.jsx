@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { createProject } from "../api/project";
+import { createProject } from "../../api/project";
 
 const ProjectForm = ({ onProjectCreated }) => {
   const [formData, setFormData] = useState({

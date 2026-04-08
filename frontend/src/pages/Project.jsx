@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { getAllProjects } from "../api/project";
-import ProjectForm from "../components/ProjectForm";
-import ProjectList from "../components/ProjectList";
+import ProjectForm from "../components/project/ProjectForm";
+import ProjectList from "../components/project/ProjectList";
 
 const Project = () => {
   const [projects, setProjects] = useState([]);

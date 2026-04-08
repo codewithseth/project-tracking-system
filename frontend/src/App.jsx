@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthContext";
@@ -9,32 +11,36 @@ import Project from "./pages/Project";
 import Task from "./pages/Task";
 import User from "./pages/User";
 import NotFound from "./pages/NotFound";
-import PublicRoute from "./components/PublicRoute";
-import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/layout/PublicRoute";
+import ProtectedRoute from "./components/layout/PrivateRoute";
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <Header />
-        <Routes>
-          {/* Public Routes */}
-          <Route element={<PublicRoute />}>
-            <Route index element={<Login />} />
-            <Route path="/login" element={<Login />} />
-          </Route>
+        <div className="d-flex flex-column min-vh-100">
+          <Header />
+          <main className="flex-grow-1 container py-4">
+            <Routes>
+              {/* Public Routes */}
+              <Route element={<PublicRoute />}>
+                <Route index element={<Login />} />
+                <Route path="/login" element={<Login />} />
+              </Route>
 
-          {/* Protected Routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/projects" element={<Project />} />
-            <Route path="/tasks" element={<Task />} />
-            <Route path="/users" element={<User />} />
-          </Route>
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/projects" element={<Project />} />
+                <Route path="/tasks" element={<Task />} />
+                <Route path="/users" element={<User />} />
+              </Route>
 
-          {/* 404 Not Found */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
+              {/* 404 Not Found */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </Router>
       <ToastContainer position="top-center" autoClose={3000} />
     </AuthProvider>
