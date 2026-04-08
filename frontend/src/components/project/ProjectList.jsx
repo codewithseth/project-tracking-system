@@ -134,6 +134,7 @@ const ProjectList = ({ projects, onProjectDeleted, onProjectUpdated }) => {
         </div>
       </div>
 
+      {/* View Project Modal */}
       <ViewProjectModal
         project={viewingProject}
         onClose={() => setViewingProject(null)}
