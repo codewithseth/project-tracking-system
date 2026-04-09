@@ -17,6 +17,19 @@ router.get("/", protect, async (req, res, next) => {
   }
 });
 
+// @route           GET /api/v1/tasks/project/:project_id
+// @description     Get all tasks for a specific project
+// @access          Private
+router.get("/project/:project_id", protect, async (req, res, next) => {
+  const { project_id } = req.params;
+  try {
+    const tasks = await Task.findByProjectId(project_id);
+    res.json(tasks);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @route           GET /api/v1/tasks/:id
 // @description     Get a task by ID
 // @access          Private

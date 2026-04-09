@@ -3,10 +3,11 @@ import { toast } from "react-toastify";
 import { deleteTask, updateTask } from "../../api/task";
 import ViewTaskModal from "./ViewTaskModal";
 
-const TasksTable = ({ tasks, onTaskDeleted, onTaskUpdated }) => {
+const TasksTable = ({ tasks, projects = [], onTaskDeleted, onTaskUpdated }) => {
   const [viewingTask, setViewingTask] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
   const [deletingTask, setDeletingTask] = useState(null);
+  const [selectedProjectId, setSelectedProjectId] = useState("");
   const [editFormData, setEditFormData] = useState({
     title: "",
     description: "",
@@ -89,12 +90,38 @@ const TasksTable = ({ tasks, onTaskDeleted, onTaskUpdated }) => {
     );
   };
 
+  // Filter tasks based on selected project
+  const filteredTasks = selectedProjectId
+    ? tasks.filter((task) => task.project_id === parseInt(selectedProjectId))
+    : tasks;
+
   return (
     <>
       <div className="card">
         <div className="card-body">
-          <h2 className="card-title mb-4">All Tasks</h2>
-          {tasks.length === 0 ? (
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h2 className="card-title mb-0">All Tasks</h2>
+            <div style={{ width: "250px" }}>
+              <label htmlFor="projectFilter" className="form-label">
+                Filter by Project
+              </label>
+              <select
+                id="projectFilter"
+                className="form-select"
+                value={selectedProjectId}
+                onChange={(e) => setSelectedProjectId(e.target.value)}
+                style={{ color: "#000", backgroundColor: "#fff" }}
+              >
+                <option value="" style={{ color: "#000" }}>
+                  All Projects
+                </option>
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}></option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {filteredTasks.length === 0 ? (
             <p className="text-muted text-center py-4">No tasks found.</p>
           ) : (
             <div className="table-responsive">
@@ -108,7 +135,7 @@ const TasksTable = ({ tasks, onTaskDeleted, onTaskUpdated }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {tasks.map((task) => (
+                  {filteredTasks.map((task) => (
                     <tr key={task.id}>
                       <td>
                         <strong>{task.title}</strong>

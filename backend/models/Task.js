@@ -13,6 +13,19 @@ class Task {
     }
   }
 
+  // Fetch tasks by project ID
+  static async findByProjectId(project_id) {
+    try {
+      const [tasks] = await pool.query(
+        "SELECT id, project_id, title, description, status, created_at FROM tasks WHERE project_id = ? ORDER BY created_at DESC",
+        [project_id],
+      );
+      return tasks;
+    } catch (error) {
+      throw new Error(`Error fetching tasks by project ID: ${error.message}`);
+    }
+  }
+
   // Fetch a task by ID
   static async findById(id) {
     try {

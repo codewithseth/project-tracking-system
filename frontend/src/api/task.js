@@ -10,6 +10,15 @@ export const getAllTasks = async () => {
   }
 };
 
+export const getTasksByProjectId = async (projectId) => {
+  try {
+    const response = await api.get(`/tasks/project/${projectId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(extractErrorMessage(error));
+  }
+};
+
 export const getTaskById = async (taskId) => {
   try {
     const response = await api.get(`/tasks/${taskId}`);

@@ -52,6 +52,7 @@ const Task = () => {
       <div className="col-lg-8">
         <TasksTable
           tasks={tasks}
+          projects={projects}
           onTaskDeleted={handleTaskDeleted}
           onTaskUpdated={handleTaskUpdated}
         />

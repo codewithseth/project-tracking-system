@@ -26,6 +26,7 @@ const ProjectForm = ({ onProjectCreated }) => {
     }
 
     setLoading(true);
+
     try {
       const response = await createProject(formData);
       toast.success(`Project "${response.title}" created successfully!`);
