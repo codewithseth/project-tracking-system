@@ -20,8 +20,10 @@ const Login = () => {
     }
 
     setLoading(true);
+
     try {
       const response = await login({ username, password });
+
       if (response?.accessToken) {
         setAccessToken(response.accessToken);
         setUser(response.user);
