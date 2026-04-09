@@ -5,7 +5,9 @@ class User {
   // Fetch all users (excluding password hashes)
   static async findAll() {
     try {
-      const [users] = await pool.query("SELECT id, username FROM users");
+      const [users] = await pool.query(
+        "SELECT id, username FROM users ORDER BY created_at DESC",
+      );
       return users;
     } catch (error) {
       throw new Error(`Error fetching users: ${error.message}`);
