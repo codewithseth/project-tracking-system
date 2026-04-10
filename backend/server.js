@@ -14,7 +14,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // CORS Configuration
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://project-tracking-system-zcy4.vercel.app",
+];
 
 // Middleware
 app.use(cors({ origin: allowedOrigins, credentials: true }));
