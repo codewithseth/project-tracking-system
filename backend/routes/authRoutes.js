@@ -43,6 +43,7 @@ router.post("/login", async (req, res, next) => {
       sameSite: "none",
       path: "/",
       maxAge: 5 * 24 * 60 * 60 * 1000, // 5 days
+      domain: "https://project-tracking-system-zcy4.vercel.app",
     });
 
     // Return tokens and user info (excluding password hash)
