@@ -95,11 +95,13 @@ const TasksTable = ({ tasks, projects = [], onTaskDeleted, onTaskUpdated }) => {
     ? tasks.filter((task) => task.project_id === parseInt(selectedProjectId))
     : tasks;
 
+  console.log(filteredTasks);
+
   return (
     <>
       <div className="card">
         <div className="card-body">
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex justify-content-between align-items-start mb-4">
             <h2 className="card-title mb-0">All Tasks</h2>
             <div style={{ width: "250px" }}>
               <label htmlFor="projectFilter" className="form-label">
@@ -112,11 +114,11 @@ const TasksTable = ({ tasks, projects = [], onTaskDeleted, onTaskUpdated }) => {
                 onChange={(e) => setSelectedProjectId(e.target.value)}
                 style={{ color: "#000", backgroundColor: "#fff" }}
               >
-                <option value="" style={{ color: "#000" }}>
-                  All Projects
-                </option>
+                <option value="">All Projects</option>
                 {projects.map((project) => (
-                  <option key={project.id} value={project.id}></option>
+                  <option key={project.id} value={project.id}>
+                    {project.title}
+                  </option>
                 ))}
               </select>
             </div>

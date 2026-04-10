@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import PublicRoute from "./components/layout/PublicRoute";
 import PrivateRoute from "./components/layout/PrivateRoute";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import Project from "./pages/Project";
 import Task from "./pages/Task";
 import User from "./pages/User";
@@ -30,6 +31,7 @@ const App = () => {
 
               {/* Protected Routes */}
               <Route element={<PrivateRoute />}>
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/projects" element={<Project />} />
                 <Route path="/tasks" element={<Task />} />
                 <Route path="/users" element={<User />} />

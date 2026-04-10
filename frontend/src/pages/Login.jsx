@@ -27,7 +27,7 @@ const Login = () => {
       if (response?.accessToken) {
         setAccessToken(response.accessToken);
         setUser(response.user);
-        navigate("/projects");
+        navigate("/profile");
       }
     } catch (error) {
       toast.error(error.message);
