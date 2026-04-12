@@ -19,8 +19,6 @@ const allowedOrigins = [
   "https://project-tracking-system-zcy4.vercel.app",
 ];
 
-app.set("trust proxy", 1);
-
 // Middleware
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
