@@ -32,7 +32,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     // Create Tokens
-    const payload = { userId: user._id };
+    const payload = { userId: user.id };
     const accessToken = await generateToken(payload, "1m");
     const refreshToken = await generateToken(payload, "30d");
 
