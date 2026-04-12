@@ -31,19 +31,17 @@ router.post("/login", async (req, res, next) => {
       throw new Error("Invalid username or password");
     }
 
-    // Generate JWT token
-    const payload = { userId: user.id };
-    const accessToken = await generateToken(payload, "1m"); // Access token valid for 1 minute
-    const refreshToken = await generateToken(payload, "5d"); // Refresh token valid for 5 days
+    // Create Tokens
+    const payload = { userId: user._id };
+    const accessToken = await generateToken(payload, "1m");
+    const refreshToken = await generateToken(payload, "30d");
 
     // Set refresh token in HTTP-Only cookie
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
-      maxAge: 5 * 24 * 60 * 60 * 1000, // 5 days
-      domain: "project-tracking-system-zcy4.vercel.app",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 
     // Return tokens and user info (excluding password hash)
@@ -98,8 +96,8 @@ router.post("/refresh", async (req, res, next) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("refreshToken", {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
 
   res.status(200).json({ message: "Logged out successfully" });
