@@ -6,13 +6,17 @@ import ProjectList from "../components/project/ProjectList";
 
 const Project = () => {
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchProjects = async () => {
+    setIsLoading(true);
     try {
       const response = await getAllProjects();
       setProjects(response);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -40,6 +44,7 @@ const Project = () => {
       <div className="col-lg-8">
         <ProjectList
           projects={projects}
+          isLoading={isLoading}
           onProjectDeleted={handleProjectDeleted}
           onProjectUpdated={handleProjectUpdated}
         />

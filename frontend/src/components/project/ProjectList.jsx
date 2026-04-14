@@ -3,7 +3,12 @@ import { toast } from "react-toastify";
 import { deleteProject, updateProject } from "../../api/project";
 import ViewProjectModal from "./ViewProjectModal";
 
-const ProjectList = ({ projects, onProjectDeleted, onProjectUpdated }) => {
+const ProjectList = ({
+  projects,
+  isLoading,
+  onProjectDeleted,
+  onProjectUpdated,
+}) => {
   const [viewingProject, setViewingProject] = useState(null);
   const [editingProject, setEditingProject] = useState(null);
   const [deletingProject, setDeletingProject] = useState(null);
@@ -71,7 +76,13 @@ const ProjectList = ({ projects, onProjectDeleted, onProjectUpdated }) => {
       <div className="card">
         <div className="card-body">
           <h2 className="card-title mb-4">All Projects</h2>
-          {projects.length === 0 ? (
+          {isLoading ? (
+            <div className="d-flex justify-content-center align-items-center py-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          ) : projects.length === 0 ? (
             <p className="text-muted text-center py-4">No projects found.</p>
           ) : (
             <div className="table-responsive">
