@@ -8,13 +8,17 @@ import { getAllProjects } from "../api/project";
 const Task = () => {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchTasks = async () => {
+    setIsLoading(true);
     try {
       const response = await getAllTasks();
       setTasks(response);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,6 +57,7 @@ const Task = () => {
         <TasksTable
           tasks={tasks}
           projects={projects}
+          isLoading={isLoading}
           onTaskDeleted={handleTaskDeleted}
           onTaskUpdated={handleTaskUpdated}
         />

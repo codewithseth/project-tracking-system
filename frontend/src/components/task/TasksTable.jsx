@@ -3,7 +3,13 @@ import { toast } from "react-toastify";
 import { deleteTask, updateTask } from "../../api/task";
 import ViewTaskModal from "./ViewTaskModal";
 
-const TasksTable = ({ tasks, projects = [], onTaskDeleted, onTaskUpdated }) => {
+const TasksTable = ({
+  tasks,
+  projects = [],
+  isLoading,
+  onTaskDeleted,
+  onTaskUpdated,
+}) => {
   const [viewingTask, setViewingTask] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
   const [deletingTask, setDeletingTask] = useState(null);
@@ -123,7 +129,13 @@ const TasksTable = ({ tasks, projects = [], onTaskDeleted, onTaskUpdated }) => {
               </select>
             </div>
           </div>
-          {filteredTasks.length === 0 ? (
+          {isLoading ? (
+            <div className="d-flex justify-content-center align-items-center py-5">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          ) : filteredTasks.length === 0 ? (
             <p className="text-muted text-center py-4">No tasks found.</p>
           ) : (
             <div className="table-responsive">
